@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데일리 볼펜 - Daily Ballpoint Pen</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #FFFFFF;
+            color: #1E293B;
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Color Variables */
+        :root {
+            --primary-navy: #0F172A;
+            --accent-blue: #1E3A8A;
+            --light-bg: #F8FAFC;
+            --border-color: #E2E8F0;
+            --text-muted: #64748B;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1080px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #334155;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Section Global */
+        section {
+            padding: 4rem 1.5rem;
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-blue);
+            margin: 0.75rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* 1. Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding-top: 3rem;
+            padding-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero {
+                flex-direction: row;
+                text-align: left;
+                justify-content: space-between;
+                padding-top: 5rem;
+                padding-bottom: 5rem;
+            }
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 520px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: #EFF6FF;
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .hero-desc {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--primary-navy);
+            color: #FFFFFF;
+            padding: 0.85rem 1.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: background-color 0.2s, transform 0.1s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .hero-image-container {
+            flex: 1;
+            margin-top: 2.5rem;
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .hero-image-container {
+                margin-top: 0;
+            }
+        }
+
+        .hero-img-placeholder {
+            width: 100%;
+            height: 320px;
+            background-color: var(--light-bg);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-muted);
+            padding: 1rem;
+            overflow: hidden;
+        }
+
+        .hero-img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* 2. Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .feature-card {
+            background-color: var(--light-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #DBEAFE;
+            color: var(--accent-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.25rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* 3. Gallery Section */
+        .gallery-controls {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            background-color: transparent;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background-color: #EFF6FF;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .gallery-card {
+            background-color: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-img-box {
+            width: 100%;
+            height: 240px;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            overflow: hidden;
+        }
+
+        .gallery-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-info {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .gallery-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .gallery-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-top: 0.25rem;
+        }
+
+        /* 4. FAQ Section */
+        .faq-container {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #FFFFFF;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            background-color: #FFFFFF;
+            border: none;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .faq-question:hover {
+            background-color: var(--light-bg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.25rem 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: none;
+            border-top: 1px solid transparent;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .faq-item.active .faq-toggle-icon {
+            transform: rotate(45deg);
+        }
+
+        .badge-unverified {
+            display: inline-block;
+            background-color: #FEF2F2;
+            color: #DC2626;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* 5. Contact Section */
+        .contact-box {
+            background-color: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .contact-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-desc {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-email-wrapper {
+            background-color: #FFFFFF;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px dashed var(--accent-blue);
+            margin-bottom: 1.5rem;
+            font-family: monospace;
+            color: var(--accent-blue);
+            font-size: 0.95rem;
+            word-break: break-all;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">데일리 볼펜</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#hero">소개</a></li>
+                    <li><a href="#features">특징</a></li>
+                    <li><a href="#gallery">갤러리</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">문의</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 1. First Screen (Hero) Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">일상의 필기감을 담다</span>
+            <h1 class="hero-title">매일 손이 가는<br>데일리 볼펜</h1>
+            <p class="hero-desc">
+                지나치지 않은 정갈함과 편안함을 선사합니다.<br>
+                당신의 매일을 기록하는 가장 깔끔한 도구.
+            </p>
+            <a href="#features" class="btn-primary">상품 정보 보기</a>
+        </div>
+        <div class="hero-image-container">
+            <div class="hero-img-placeholder" id="hero-img-box">
+                <span id="hero-img-text">📷 볼펜 사진 (업로드 대기 중)</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Product Features Section -->
+    <section id="features">
+        <h2 class="section-title">상품 특징</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3 class="feature-title">군더더기 없는 깔끔한 디자인</h3>
+                <p class="feature-desc">
+                    복잡한 장식을 줄이고 본연의 기능과 미학에 집중했습니다. 
+                    데스크 위 어디에 두어도 자연스럽게 어우러지는 단정한 스타일을 완성했습니다.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📌</div>
+                <h3 class="feature-title">휴대하기 편리한 그립과 클립</h3>
+                <p class="feature-desc">
+                    가벼운 무게감과 슬림한 바디로 노트, 포켓, 다이어리 어디든 
+                    간편하게 고정하여 언제 어디서나 바로 꺼내 쓸 수 있습니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Photo Gallery Section -->
+    <section id="gallery">
+        <h2 class="section-title">사진 갤러리</h2>
+        <div class="gallery-controls">
+            <div class="upload-btn-wrapper">
+                <button class="btn-outline">🖼️ 내 촬영 사진 적용하기 (3장 일괄 업로드)</button>
+                <input type="file" id="image-upload" accept="image/*" multiple>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+                * 정면, 사선, 세부 순서로 이미지가 반영됩니다.
+            </p>
+        </div>
+
+        <div class="gallery-grid">
+            <!-- Front View -->
+            <div class="gallery-card">
+                <div class="gallery-img-box" id="gallery-box-0">
+                    <span>정면 사진</span>
+                </div>
+                <div class="gallery-info">
+                    <span class="gallery-tag">Front View</span>
+                    <h4 class="gallery-label">정면 모습</h4>
+                </div>
+            </div>
+
+            <!-- Angled View -->
+            <div class="gallery-card">
+                <div class="gallery-img-box" id="gallery-box-1">
+                    <span>사선 사진</span>
+                </div>
+                <div class="gallery-info">
+                    <span class="gallery-tag">Angled View</span>
+                    <h4 class="gallery-label">사선 모습</h4>
+                </div>
+            </div>
+
+            <!-- Detail View -->
+            <div class="gallery-card">
+                <div class="gallery-img-box" id="gallery-box-2">
+                    <span>세부 사진</span>
+                </div>
+                <div class="gallery-info">
+                    <span class="gallery-tag">Detail View</span>
+                    <h4 class="gallery-label">디테일 / 세부 모습</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FAQ Section -->
+    <section id="faq">
+        <h2 class="section-title">자주 묻는 질문 (FAQ)</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">
+                    Q. 데일리 볼펜의 주요 특징은 무엇인가요?
+                    <span class="faq-toggle-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    A. 깔끔하고 정제된 디자인과 일상에서 손쉽게 휴대할 수 있도록 제작된 편의성이 가장 큰 특징입니다.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Q. 리필심 교체가 가능한가요?
+                    <span class="faq-toggle-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    A. 하단 캡을 회전시켜 분리 후 리필심을 교체할 수 있는 구조입니다.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Q. 볼펜심의 굵기(mm)와 잉크 색상은 어떻게 되나요?
+                    <span class="badge-unverified">확인 필요</span>
+                    <span class="faq-toggle-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    A. 현재 제원 데이터가 확정되지 않았습니다. <strong>[확인 필요]</strong> 표기 항목으로 세부 정보 확인 후 업데이트될 예정입니다.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Q. 판매 가격 및 공식 인증 정보는 어디서 볼 수 있나요?
+                    <span class="badge-unverified">확인 필요</span>
+                    <span class="faq-toggle-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    A. 제품의 판매가 및 기타 인증 성능은 현재 검토 단계로, 확인 후 정식 안내해 드릴 예정입니다. <strong>[확인 필요]</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Contact Section -->
+    <section id="contact">
+        <div class="contact-box">
+            <h2 class="contact-title">제품 문의하기</h2>
+            <p class="contact-desc">
+                데일리 볼펜에 대해 궁금한 점이 있으시다면 이메일로 문의를 남겨주세요.
+            </p>
+            <div class="contact-email-wrapper">
+                담당자 이메일: <strong>[이메일 주소 입력 필요]</strong>
+            </div>
+            <a href="mailto:your-email@example.com?subject=[데일리볼펜 문의]" class="btn-primary">
+                ✉️ 이메일로 문의 보내기
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 데일리 볼펜 (Daily Ballpoint Pen). All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem; color: #94A3B8;">디자인 수강생 과제 제출용 홍보 랜딩페이지</p>
+    </footer>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // FAQ Accordion Toggle
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                
+                // Toggle current FAQ
+                faqItem.classList.toggle('active');
+
+                // Close other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Image Upload Preview Script
+        const imageUpload = document.getElementById('image-upload');
+        const heroImgBox = document.getElementById('hero-img-box');
+        
+        imageUpload.addEventListener('change', function(event) {
+            const files = event.target.files;
+
+            if (files.length > 0) {
+                // Update Hero Image with first uploaded image
+                const heroReader = new FileReader();
+                heroReader.onload = function(e) {
+                    heroImgBox.innerHTML = `<img src="${e.target.result}" alt="데일리 볼펜 대표 사진">`;
+                };
+                heroReader.readAsDataURL(files[0]);
+
+                // Update Gallery Images
+                for (let i = 0; i < Math.min(files.length, 3); i++) {
+                    const galleryBox = document.getElementById(`gallery-box-${i}`);
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        galleryBox.innerHTML = `<img src="${e.target.result}" alt="갤러리 볼펜 사진 ${i+1}">`;
+                    };
+                    reader.readAsDataURL(files[i]);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
